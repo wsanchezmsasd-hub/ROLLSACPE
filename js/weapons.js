@@ -57,11 +57,18 @@ Weapons.fire = function () {
     Weapons.fireCooldown = CONFIG.KATANA_SLASH_COOLDOWN;
     return;
   }
+  if (Player.classType === "tomahawk") {
+    var startX = Player.x + CONFIG.PLAYER_SIZE / 2, startY = Player.y + CONFIG.PLAYER_SIZE / 2;
+    var dx = Input.mouseX - startX, dy = Input.mouseY - startY, distance = Math.hypot(dx, dy) || 1;
+    Weapons.projectiles.push({ kind: "tomahawk", x: startX, y: startY, vx: dx / distance * CONFIG.TOMAHAWK_THROW_SPEED, vy: dy / distance * CONFIG.TOMAHAWK_THROW_SPEED, spin: 0, damage: stats.damage, life: CONFIG.WEAPON_PROJECTILE_LIFE });
+    Weapons.fireCooldown = CONFIG.TOMAHAWK_COOLDOWN;
+    return;
+  }
   if (stats.ammo === 0) return;
   Weapons.ammo--;
   var startX = Player.x + CONFIG.PLAYER_SIZE / 2, startY = Player.y + CONFIG.PLAYER_SIZE / 2;
   var dx = Input.mouseX - startX, dy = Input.mouseY - startY, distance = Math.hypot(dx, dy) || 1;
-  Weapons.projectiles.push({ kind: Player.classType === "ak47" ? "akBullet" : Player.classType, x: startX, y: startY, vx: dx / distance * CONFIG.WEAPON_PROJECTILE_SPEED, vy: dy / distance * CONFIG.WEAPON_PROJECTILE_SPEED, damage: stats.damage, life: CONFIG.WEAPON_PROJECTILE_LIFE });
+  Weapons.projectiles.push({ kind: Player.classType, x: startX, y: startY, vx: dx / distance * CONFIG.WEAPON_PROJECTILE_SPEED, vy: dy / distance * CONFIG.WEAPON_PROJECTILE_SPEED, damage: stats.damage, life: CONFIG.WEAPON_PROJECTILE_LIFE });
   if (Weapons.ammo === 0) Weapons.reloadTimer = CONFIG.WEAPON_RELOAD_FRAMES[Player.classType];
   if (Player.classType === "bazooka") Weapons.fireCooldown = CONFIG.BAZOOKA_FIRE_COOLDOWN;
 };
@@ -78,11 +85,15 @@ Weapons.useAbility = function () {
     Weapons.parryResolved = false;
     return;
   }
-  if (Player.classType === "ak47") {
-    if (Weapons.projectiles.some(function (p) { return p.kind === "ak"; })) return;
+  if (Player.classType === "tomahawk") {
+    if (Weapons.volleyCooldown > 0) return;
     var throwX = Player.x + CONFIG.PLAYER_SIZE / 2, throwY = Player.y + CONFIG.PLAYER_SIZE / 2;
-    var throwDx = Input.mouseX - throwX, throwDy = Input.mouseY - throwY, throwDistance = Math.hypot(throwDx, throwDy) || 1;
-    Weapons.projectiles.push({ kind: "ak", x: throwX, y: throwY, vx: throwDx / throwDistance * CONFIG.AK_THROW_SPEED, vy: throwDy / throwDistance * CONFIG.AK_THROW_SPEED, age: 0, returning: false });
+    var baseAngle = Math.atan2(Input.mouseY - throwY, Input.mouseX - throwX);
+    for (var a = -1; a <= 1; a++) {
+      var angle = baseAngle + a * CONFIG.TOMAHAWK_VOLLEY_SPREAD;
+      Weapons.projectiles.push({ kind: "tomahawk", x: throwX, y: throwY, vx: Math.cos(angle) * CONFIG.TOMAHAWK_THROW_SPEED, vy: Math.sin(angle) * CONFIG.TOMAHAWK_THROW_SPEED, spin: 0, damage: CONFIG.CLASS_STATS.tomahawk.damage, life: CONFIG.WEAPON_PROJECTILE_LIFE });
+    }
+    Weapons.volleyCooldown = CONFIG.TOMAHAWK_VOLLEY_COOLDOWN;
     return;
   }
   if (Player.classType !== "pistols" || Player.dashTimer > 0 || Player.dashCooldown > 0) return;
@@ -129,6 +140,7 @@ Weapons.updateProjectiles = function () {
 };
 Weapons.updateBullet = function (projectile, index) {
   projectile.x += projectile.vx; projectile.y += projectile.vy; projectile.life--;
+  if (projectile.kind === "tomahawk") { projectile.vy += CONFIG.TOMAHAWK_GRAVITY; projectile.spin = (projectile.spin || 0) + CONFIG.TOMAHAWK_SPIN_RATE; }
   var hit = projectile.kind === "bazooka" ? Enemy.damageAt(projectile.x, projectile.y, 0, CONFIG.WEAPON_HIT_REACH) : Enemy.damageAt(projectile.x, projectile.y, projectile.damage, CONFIG.WEAPON_HIT_REACH);
   if (hit || projectile.life <= 0) {
     if (projectile.kind === "bazooka") Weapons.explode(projectile.x, projectile.y);
@@ -149,14 +161,4 @@ Weapons.explode = function (x, y) {
   Level.destroyCircle(x, y, CONFIG.BAZOOKA_BLAST_RADIUS);
   Enemy.damageRadius(x, y, CONFIG.BAZOOKA_BLAST_RADIUS, CONFIG.CLASS_STATS.bazooka.damage);
   Weapons.explosions.push({ x: x, y: y, age: 0 });
-};
-Weapons.updateAk = function (projectile, index) {
-  var playerX = Player.x + CONFIG.PLAYER_SIZE / 2, playerY = Player.y + CONFIG.PLAYER_SIZE / 2;
-  if (!projectile.returning && (projectile.age > CONFIG.AK_RETURN_TIME || Enemy.damageAt(projectile.x, projectile.y, CONFIG.AK_THROW_DAMAGE, CONFIG.WEAPON_HIT_REACH))) projectile.returning = true;
-  if (projectile.returning) {
-    var dx = playerX - projectile.x, dy = playerY - projectile.y, distance = Math.hypot(dx, dy) || 1;
-    projectile.vx = dx / distance * CONFIG.AK_THROW_SPEED; projectile.vy = dy / distance * CONFIG.AK_THROW_SPEED;
-    if (distance < CONFIG.AK_CATCH_DISTANCE) { Player.vy = CONFIG.AK_CATCH_LAUNCH; Weapons.projectiles.splice(index, 1); return; }
-  }
-  projectile.x += projectile.vx; projectile.y += projectile.vy;
 };
