@@ -8,7 +8,7 @@ var Enemy = {
     { type: "drone", name: "Drone", description: "25 HP. Respawns after 3.5 seconds and fires short, slow bursts." },
     { type: "drill", name: "Drill", description: "45 HP. Respawns after 2 seconds, then locks on and dashes." },
     { type: "greenBall4", name: "Green ball 4", description: "Two 15 HP balls respawn after 1.25 seconds and leap toward you." },
-    { type: "domino", name: "Adachi Rei", description: "PLEASE PICK THIS NOW" }
+    { type: "domino", name: "Domino", description: "A gigantic, unkillable domino that jumps near your position, launching you back or crushing you." }
   ]
 };
 Enemy.isType = function (type, wanted) { return type === wanted || (wanted === "cuboid" && type === "cuobid") || (wanted === "drill" && type === "evilSpike"); };
