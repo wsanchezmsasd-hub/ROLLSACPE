@@ -34,7 +34,7 @@ Player.update = function () {
   if (Input.right) { Player.vx += movement; }
   Player.clampVelocity();
   if (Player.coyoteTimer > 0) Player.coyoteTimer--;
-  var jumpPower = CONFIG.JUMP_POWER + Game.blessings.jump * CONFIG.BLESSING_EFFECTS.jumpPower + (Game.levelNumber >= 2 ? CONFIG.LATER_LEVEL_JUMP_BONUS : 0);
+  var jumpPower = (CONFIG.JUMP_POWER + Game.blessings.jump * CONFIG.BLESSING_EFFECTS.jumpPower + (Game.levelNumber >= 2 ? CONFIG.LATER_LEVEL_JUMP_BONUS : 0)) * Math.pow(CONFIG.CURSES.lowerGravity.jumpPowerMultiplier, Game.curseCount("lowerGravity"));
   if (Input.jump && (Player.onGround || Player.coyoteTimer > 0)) { Player.vy = -jumpPower; Player.onGround = false; Player.coyoteTimer = 0; }
   Player.vy += CONFIG.GRAVITY * Math.pow(CONFIG.CURSES.lowerGravity.gravityMultiplier, Game.curseCount("lowerGravity")); if (Player.vy > CONFIG.MAX_FALL) Player.vy = CONFIG.MAX_FALL;
   var stepX = Player.vx > 0 ? 1 : (Player.vx < 0 ? -1 : 0);

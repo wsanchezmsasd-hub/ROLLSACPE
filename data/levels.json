@@ -2,24 +2,24 @@
   "_comment": "A level is just a list of piece names in order. Every name you use here must exist in data/pieces.json.",
   "levels": [
     {
-      "name": "Level 1 - Warm Up",
-      "pieces": ["start", "flat", "gap", "flat", "spikes", "platform", "stairs", "finish"]
+      "name": "Level 1 -  Hello world",
+      "pieces": ["platform", "gap", "spawn", "flat", "spikes"]
     },
     {
       "name": "Level 2 - Watch Your Step",
-      "pieces": ["start", "spikes", "gap", "platform", "highplat", "highflat", "flat", "gap", "flat", "finish"]
+      "pieces": ["spikes", "gap", "platform", "highplat", "spawn", "flat", "gap", "flat"]
     },
     {
       "name": "Level 3 - Highrise",
-      "pieces": ["start", "spikes", "step", "stairs", "highflat", "thornplatform", "highflat", "highplat", "spikepit", "finish"]
+      "pieces": ["spikes", "step", "stairs", "highflat", "spawn", "highflat", "highplat", "spikepit"]
     },
     {
       "name": "Level 4 - Floorless",
-      "pieces": ["start", "platform", "manygap", "stairs", "Nofloorplat", "Nofloorplat2", "Nofloorplat3", "Nofloorplat4", "Nofloorplat5", "finish"]
+      "pieces": ["platform", "manygap", "stairs", "Nofloorplat", "Nofloorplat2", "Nofloorplat3", "Nofloorplat4", "Nofloorplat5", "finish"]
     },
     {
       "name": "Level 5 - The Gauntlet",
-      "pieces": ["start", "spikes", "gap", "platform", "spikehill", "manygap", "stairs", "highplat", "spikepit", "finish"]
+      "pieces": ["spikes", "gap", "platform", "spawn", "highplat", "Step", "Highflat", "manygap", "stairs", "highplat", "spikepit"]
     }
   ]
 }

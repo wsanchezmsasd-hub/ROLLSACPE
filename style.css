@@ -1,42 +1,52 @@
-body { background:#000; color:#f00; font-family:monospace; text-align:center; margin:24px; }
+/* Force pull from Google CDN using exact HTTPS and explicit layout string */
+@import url('https://googleapis.com');
+
+body { 
+  background: #0d0014; 
+  color: #c77dff; 
+  font-family: 'Audiowide', monospace; /* Changed fallback to monospace to look closer to your original style if it lags */
+  font-weight: 400;
+  text-align: center; 
+  margin: 24px; 
+}
 h1 { letter-spacing:6px; font-size:24px; margin-bottom:16px; }
-canvas { width:min(1200px, 96vw); height:auto; aspect-ratio:2 / 1; border:3px solid #f00; background:#080808; display:block; margin:0 auto; image-rendering:pixelated; }
+canvas { width:min(1200px, 96vw); height:auto; aspect-ratio:2 / 1; border:3px solid #9d3fff; background:#12001f; display:block; margin:0 auto; image-rendering:pixelated; }
 #message { font-size:18px; min-height:24px; margin-top:16px; }
 .controls { font-size:13px; }
-#enemy-choice { position:fixed; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:16px; background:rgba(0,0,0,.72); z-index:2; }
+#enemy-choice { position:fixed; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:16px; background:rgba(15,0,25,.78); z-index:2; }
 #enemy-choice[hidden] { display:none; }
-#blessing-choice { position:fixed; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:16px; background:rgba(0,0,0,.94); z-index:4; }
+#blessing-choice { position:fixed; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:16px; background:rgba(15,0,25,.95); z-index:4; }
 #blessing-choice[hidden] { display:none; }
-#blessing-choice h2 { margin:0; letter-spacing:2px; color:#ffd21f; }
+#blessing-choice h2 { margin:0; letter-spacing:2px; color:#e0b3ff; }
 #blessing-cards { display:flex; gap:14px; max-width:900px; justify-content:center; flex-wrap:wrap; }
-.blessing-card,.continue-button { width:210px; min-height:120px; padding:18px 12px; border:2px solid #ffd21f; background:#000; color:#ffd21f; font:inherit; cursor:pointer; }
-.blessing-card:hover,.blessing-card:focus,.continue-button:hover,.continue-button:focus { background:#ffd21f; color:#000; }
+.blessing-card,.continue-button { width:210px; min-height:120px; padding:18px 12px; border:2px solid #e0b3ff; background:#000; color:#e0b3ff; font-family: 'Audiowide', monospace; font-weight: 400; cursor:pointer; }
+.blessing-card:hover,.blessing-card:focus,.continue-button:hover,.continue-button:focus { background:#e0b3ff; color:#000; }
 .blessing-card:disabled { opacity:.4; cursor:not-allowed; }
 .blessing-card strong,.blessing-card span { display:block; }
 .blessing-card strong { font-size:17px; margin-bottom:12px; }
 .blessing-card span { font-size:12px; line-height:1.4; }
-#curse-choice { position:fixed; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:16px; background:rgba(0,0,0,.8); z-index:5; }
+#curse-choice { position:fixed; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:16px; background:rgba(15,0,25,.85); z-index:5; }
 #curse-choice[hidden] { display:none; }
-#curse-choice h2 { margin:0; letter-spacing:2px; color:#ff5a5a; }
+#curse-choice h2 { margin:0; letter-spacing:2px; color:#ff6fd8; }
 #curse-cards { display:flex; gap:14px; max-width:900px; justify-content:center; flex-wrap:wrap; }
-.curse-card { width:210px; min-height:130px; padding:18px 12px; border:2px solid #ff5a5a; background:#000; color:#ff5a5a; font:inherit; cursor:pointer; }
-.curse-card:hover,.curse-card:focus { background:#ff5a5a; color:#000; }
+.curse-card { width:210px; min-height:130px; padding:18px 12px; border:2px solid #ff6fd8; background:#000; color:#ff6fd8; font-family: 'Audiowide', monospace; font-weight: 400; cursor:pointer; }
+.curse-card:hover,.curse-card:focus { background:#ff6fd8; color:#000; }
 .curse-card strong,.curse-card span { display:block; }
 .curse-card strong { font-size:17px; margin-bottom:12px; }
 .curse-card span { font-size:12px; line-height:1.4; }
-#class-choice { position:fixed; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:16px; background:rgba(0,0,0,.72); z-index:3; }
+#class-choice { position:fixed; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:16px; background:rgba(15,0,25,.78); z-index:3; }
 #class-choice[hidden] { display:none; }
 #class-choice h2 { margin:0; letter-spacing:2px; }
 #class-cards { display:flex; gap:14px; max-width:900px; justify-content:center; }
-.class-card { width:210px; min-height:145px; padding:18px 12px; border:2px solid #ffb000; background:#000; color:#ffb000; font:inherit; cursor:pointer; }
-.class-card:hover,.class-card:focus { background:#ffb000; color:#000; }
+.class-card { width:210px; min-height:145px; padding:18px 12px; border:2px solid #bf5fff; background:#000; color:#bf5fff; font-family: 'Audiowide', monospace; font-weight: 400; cursor:pointer; }
+.class-card:hover,.class-card:focus { background:#bf5fff; color:#000; }
 .class-card strong,.class-card span { display:block; }
 .class-card strong { font-size:17px; margin-bottom:12px; }
 .class-card span { font-size:12px; line-height:1.4; }
 #enemy-choice h2 { margin:0; letter-spacing:2px; }
 #enemy-cards { display:flex; gap:14px; max-width:900px; justify-content:center; }
-.enemy-card { width:190px; min-height:130px; padding:18px 12px; border:2px solid #f00; background:#000; color:#f00; font:inherit; cursor:pointer; }
-.enemy-card:hover,.enemy-card:focus { background:#f00; color:#000; }
+.enemy-card { width:190px; min-height:130px; padding:18px 12px; border:2px solid #9d4edd; background:#000; color:#9d4edd; font-family: 'Audiowide', monospace; font-weight: 400; cursor:pointer; }
+.enemy-card:hover,.enemy-card:focus { background:#9d4edd; color:#000; }
 .enemy-card strong,.enemy-card span { display:block; }
 .enemy-card strong { font-size:17px; margin-bottom:12px; }
 .enemy-card span { font-size:12px; line-height:1.4; }
