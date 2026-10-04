@@ -34,4 +34,4 @@ You will be figHting  for survival in an EndLess geometric Plane. Choose from **
 *   📦 **Cuboid** — A cluster of 3 trailing cubes tracking your location. Their velocity scales the closer you get.
 *   🔻 **Drill** — Charges and executes high-speed dashes. $${\color{red}Keep \space out \space of \space its \space horizontal \space path.}$$
 *   🛸 **Drone** — Hovers persistently above your position before raining down targeted projectile volleys.
-*   🧸 **Adachi Rei** — Launches her body near your position; $${\color{orange}watch \space out \space for \space her \space warning.}$$
+*   🃏 **Domino** — Launches its body near your position; $${\color{orange}watch \space out \space for \space its \space warning.}$$
