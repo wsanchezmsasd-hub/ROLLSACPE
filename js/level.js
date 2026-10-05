@@ -21,6 +21,7 @@ Level.loadData = function (whenDone) {
 
 Level.build = function (levelNumber) {
   var level = Level.getDefinition(levelNumber);
+  level = { name: level.name, pieces: Level.arrangePieces(level.pieces) };
   Level.name = level.name; Level.grid = []; Level.redTesseracts = []; Level.goldTesseracts = []; Level.fakeTesseracts = []; Level.goldActive = false; Level.collapseActive = false; Level.collapseTimer = 0; Level.collapseWarning = 0; Level.collapseColumn = -1; Level.collapseColumns = []; Level.cols = level.pieces.length * CONFIG.PIECE_COLS; Level.spawnStartCol = 0; Level.spawnEndCol = -1; Level.protectedPieceIndices = []; Level.collapseOrder = []; Level.collapsePieceCursor = 0;
   Level.tesseractGoal = CONFIG.RED_TESSERACTS_BASE + levelNumber * CONFIG.RED_TESSERACTS_STEP;
   for (var row = 0; row < CONFIG.ROWS; row++) { Level.grid.push(""); }
@@ -35,6 +36,21 @@ Level.build = function (levelNumber) {
   Level.placeTesseracts(level.pieces);
 };
 
+Level.pieceHasStart = function (pieceName) {
+  var piece = Level.pieces[pieceName];
+  if (!piece) return false;
+  for (var r = 0; r < CONFIG.ROWS; r++) { if (piece[r].indexOf("S") >= 0) return true; }
+  return false;
+};
+// Spawn piece goes in the middle of the map; the finish stays at the far right end.
+Level.arrangePieces = function (names) {
+  var arranged = names.slice(), startIndex = -1;
+  for (var i = 0; i < arranged.length; i++) { if (Level.pieceHasStart(arranged[i])) { startIndex = i; break; } }
+  if (startIndex < 0) return arranged;
+  var startPiece = arranged.splice(startIndex, 1)[0];
+  arranged.splice(Math.floor(arranged.length / 2), 0, startPiece);
+  return arranged;
+};
 Level.getDefinition = function (levelNumber) {
   if (levelNumber < Level.levels.length) return Level.levels[levelNumber];
   var source = Level.levels[levelNumber % Level.levels.length];
@@ -208,7 +224,7 @@ Level.findStart = function () {
   Level.startX = 0; Level.startY = 0;
 };
 Level.charAt = function (col, row) { if (row < 0 || row >= CONFIG.ROWS || col < 0 || col >= Level.cols) return "."; return Level.grid[row].charAt(col); };
-Level.isSolid = function (col, row) { return Level.charAt(col, row) === "#"; };
+Level.isSolid = function (col, row) { if (col >= Level.cols) return true; /* right-hand wall */ return Level.charAt(col, row) === "#"; };
 Level.isSpawnColumn = function (col) { return Level.protectedPieceIndices.indexOf(Math.floor(col / CONFIG.PIECE_COLS)) >= 0; };
 Level.isSpike = function (col, row) { return Level.charAt(col, row) === "^"; };
 Level.isFinish = function (col, row) { return Level.goldActive && Level.charAt(col, row) === "F"; };

@@ -13,9 +13,9 @@ var CONFIG = {
   JUMP_POWER: 12,
   GRAVITY: 0.5,
   MAX_FALL: 16,
-  MAX_HORIZONTAL_SPEED: 7.5,
+  MAX_HORIZONTAL_SPEED: 8,
   MAX_VERTICAL_SPEED: 16,
-  COYOTE_TIME_FRAMES: 12,
+  COYOTE_TIME_FRAMES: 8, // 0.133 seconds 
   PLAYER_SIZE: 32,
   PLAYER_RADIUS: 16,
 
@@ -66,8 +66,8 @@ var CONFIG = {
   ENEMY_RESPAWN_DISTANCE: 520,
   ENEMY_WINDUP_FRAMES: 60,
   ENEMY_SPAWN_HEIGHT: 100,
-  ENEMY_HP: { drone: 25, drill: 45, greenBall4: 15 },
-  ENEMY_RESPAWN_FRAMES: { drone: 210, drill: 120, greenBall4: 75 },
+  ENEMY_HP: { drone: 25, drill: 45, greenBall4: 15, ase: 30 },
+  ENEMY_RESPAWN_FRAMES: { drone: 210, drill: 120, greenBall4: 75, ase: 180 },
   CUOBID_SPEED: 1.3,
   CUOBID_DISTANCE_SPEED: 0.0025,
   CUOBID_MAX_SPEED: 8.5,
@@ -89,6 +89,22 @@ var CONFIG = {
   DRONE_BURST_COOLDOWN: 130,
   DRONE_FIRE_MOVE_FACTOR: 0.2,
   DRONE_COUNT: 1,
+  DRONE_OFFSET_X: 150,          // each drone picks a random spot this far left/right of you (so they stack)
+  DRONE_OFFSET_Y: 45,           // ...and this much random vertical variation
+  DRONE_LEAD_FRAMES: 25,        // aims this many frames ahead of your velocity
+  DRONE_MAX_SPEED: 6,           // top flying speed while approaching
+  DRONE_FIRE_RANGE: 340,        // only starts a burst when this close to you
+  // ASE (All Seeing Eye)
+  ASE_RADIUS: 22,
+  ASE_SPEED_MULT: 0.4,          // moves like a Cuboid (speeds up with distance) times this
+  ASE_TELEPORT_INTERVAL: 240,   // frames between teleports
+  ASE_TELEPORT_WARNING: 45,     // frames the destination ring is shown
+  ASE_TELEPORT_DISTANCE: 380,   // how far ahead of you (horizontally) it lands
+  ASE_MIN_DISTANCE: 260,        // never lands closer than this
+  // ROLLER: copies your path, delayed. Stack N delays by BASE + N * STACK.
+  ROLLER_RADIUS: 15,
+  ROLLER_BASE_DELAY_FRAMES: 90,    // 1.5 s
+  ROLLER_STACK_DELAY_FRAMES: 90,  // +1.5 s per extra roller
   DOMINO_WIDTH: 90,
   DOMINO_HEIGHT: 150,
   DOMINO_SPEED: 2.5,

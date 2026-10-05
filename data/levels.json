@@ -14,12 +14,12 @@
       "pieces": ["spikes", "step", "stairs", "highflat", "spawn", "highflat", "highplat", "spikepit"]
     },
     {
-      "name": "Level 4 - Holes",
-      "pieces": ["platform", "manygap", "stairs", "highflat", "manygap", "spawn", "highflat", "manyspike", "step"]
+      "name": "Level 4 - Gaps",
+      "pieces": ["gap", "platform", "flat", "manygap", "spawn", "manyspikes", "highflat", "thornplatform", "highplat", "gap"]
     },
     {
-      "name": "Level 5 - Ultimate",
-      "pieces": ["spikes", "gap", "platform", "highplat", "spawn", "Highflat", "manygap", "stairs", "highplat", "spikepit"]
+      "name": "Level 5 - Goodbye World",
+      "pieces": ["spikes", "gap", "platform", "spawn", "highplat", "step", "highflat", "manygap", "stairs", "highplat", "spikepit"]
     }
   ]
 }
