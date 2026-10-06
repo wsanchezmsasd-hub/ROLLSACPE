@@ -11,7 +11,7 @@
     },
     {
       "name": "Level 3 - Bunker",
-      "pieces": ["spikes", "step", "stairs", "highflat", "spawn", "highflat", "highplat", "spikepit"]
+      "pieces": ["spikes", "step", "stairs", "highflat", "spawn", "highflat", "highplat", "highflat"]
     },
     {
       "name": "Level 4 - Gaps",
